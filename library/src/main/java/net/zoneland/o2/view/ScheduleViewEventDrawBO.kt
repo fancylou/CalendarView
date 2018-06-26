@@ -8,7 +8,7 @@ import android.graphics.RectF
 
 
 data class ScheduleViewEventDrawBO(
-        val event: ScheduleViewEvent,
+        val event: CalendarViewEvent,
         var left: Float = 0f,
         var right: Float = 0f,
         var width: Float = 0f,//普通事件 算宽度

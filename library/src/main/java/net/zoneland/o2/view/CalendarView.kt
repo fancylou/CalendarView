@@ -24,7 +24,7 @@ import kotlin.collections.ArrayList
  */
 
 
-class ScheduleViewLayout : LinearLayout {
+class CalendarView : LinearLayout {
 
     private val TODAY_HEADER_COLOR = Color.rgb(39, 137, 228)
     private val VIEW_PAGER_START_POSITION = 500
@@ -48,7 +48,7 @@ class ScheduleViewLayout : LinearLayout {
     private lateinit var viewPager: ViewPager
     private val adapter by lazy { SViewPagerAdapter(mViewType) }
 
-    private val mEventList: ArrayList<ScheduleViewEvent> by lazy { ArrayList<ScheduleViewEvent>() }
+    private val mEventList: ArrayList<CalendarViewEvent> by lazy { ArrayList<CalendarViewEvent>() }
 
     constructor(context: Context) : this(context, null, 0)
 
@@ -56,16 +56,16 @@ class ScheduleViewLayout : LinearLayout {
 
     constructor(context: Context, attributes: AttributeSet?, defStyleAttr: Int) : super(context, attributes, defStyleAttr) {
 
-        val array = context.obtainStyledAttributes(attributes, R.styleable.ScheduleViewLayout)
-        mHeaderTextSize = array.getDimensionPixelSize(R.styleable.ScheduleViewLayout_headerTextSize, context.sp(14))
-        mHeaderColumnTextColor = array.getColor(R.styleable.ScheduleViewLayout_headerTextColor, Color.BLACK)
-        mTodayHeaderTextColor = array.getColor(R.styleable.ScheduleViewLayout_headerTodayTextColor, TODAY_HEADER_COLOR)
-        mTimeTextSize = array.getDimensionPixelSize(R.styleable.ScheduleViewLayout_timeTextSize, context.sp(14))
-        mTimeColumnTextColor = array.getColor(R.styleable.ScheduleViewLayout_timeTextColor, Color.BLACK)
-        mEventTextSize = array.getDimensionPixelSize(R.styleable.ScheduleViewLayout_eventTextSize, context.sp(10))
-        mViewType = array.getInt(R.styleable.ScheduleViewLayout_viewType, ScheduleView.VIEWTYPE_WEEK)
-        mFirstDayOfWeek = array.getInt(R.styleable.ScheduleViewLayout_firstDayOfWeek, Calendar.SUNDAY)
-        mHourHeight = array.getDimensionPixelSize(R.styleable.ScheduleViewLayout_hourHeight, context.dip(50))
+        val array = context.obtainStyledAttributes(attributes, R.styleable.CalendarView)
+        mHeaderTextSize = array.getDimensionPixelSize(R.styleable.CalendarView_headerTextSize, context.sp(14))
+        mHeaderColumnTextColor = array.getColor(R.styleable.CalendarView_headerTextColor, Color.BLACK)
+        mTodayHeaderTextColor = array.getColor(R.styleable.CalendarView_headerTodayTextColor, TODAY_HEADER_COLOR)
+        mTimeTextSize = array.getDimensionPixelSize(R.styleable.CalendarView_timeTextSize, context.sp(14))
+        mTimeColumnTextColor = array.getColor(R.styleable.CalendarView_timeTextColor, Color.BLACK)
+        mEventTextSize = array.getDimensionPixelSize(R.styleable.CalendarView_eventTextSize, context.sp(10))
+        mViewType = array.getInt(R.styleable.CalendarView_viewType, ScheduleView.VIEWTYPE_WEEK)
+        mFirstDayOfWeek = array.getInt(R.styleable.CalendarView_firstDayOfWeek, Calendar.SUNDAY)
+        mHourHeight = array.getDimensionPixelSize(R.styleable.CalendarView_hourHeight, context.dip(50))
         array.recycle()
         init(context)
     }
@@ -77,12 +77,12 @@ class ScheduleViewLayout : LinearLayout {
     fun backToToday(){
         viewPager.setCurrentItem(VIEW_PAGER_START_POSITION, false)
     }
-    fun addEvent(event: ScheduleViewEvent) {
+    fun addEvent(event: CalendarViewEvent) {
         mEventList.add(event)
         adapter.setEventList(mEventList)
     }
 
-    fun addEvents(events: List<ScheduleViewEvent>) {
+    fun addEvents(events: List<CalendarViewEvent>) {
         mEventList.addAll(events)
         adapter.setEventList(mEventList)
     }
@@ -122,7 +122,7 @@ class ScheduleViewLayout : LinearLayout {
                 if (list.isNotEmpty()){
                     pageChangedListener?.changed(list)
                 }else{
-                    Log.i("ScheduleViewLayout", "OnSchedulerPageChangedListener changed , showDays list is empty , maybe ScheduleViewLayout is not show")
+                    Log.i("CalendarView", "OnSchedulerPageChangedListener changed , showDays list is empty , maybe CalendarView is not show")
                 }
             }
         })
@@ -130,13 +130,13 @@ class ScheduleViewLayout : LinearLayout {
 
     inner class SViewPagerAdapter(val viewType: Int) : PagerAdapter() {
         private val currentViews: ArrayDeque<ScheduleView> by lazy { ArrayDeque<ScheduleView>() }
-        private val mEventList: ArrayList<ScheduleViewEvent> by lazy { ArrayList<ScheduleViewEvent>() }
+        private val mEventList: ArrayList<CalendarViewEvent> by lazy { ArrayList<CalendarViewEvent>() }
         private val mShowDays: SparseArray<List<Date>> by lazy { SparseArray<List<Date>>() }
         init {
             currentViews.iterator()
         }
 
-        fun setEventList(eventList: ArrayList<ScheduleViewEvent>) {
+        fun setEventList(eventList: ArrayList<CalendarViewEvent>) {
             mEventList.clear()
             mEventList.addAll(eventList)
             currentViews.forEach { view ->

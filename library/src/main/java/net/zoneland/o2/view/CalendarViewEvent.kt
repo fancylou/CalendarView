@@ -7,7 +7,7 @@ import java.util.*
  * Created by fancyLou on 05/06/2018.
  */
 
-data class ScheduleViewEvent(
+data class CalendarViewEvent(
         var id:String = "",
         var startTime:Calendar = Calendar.getInstance(),
         var endTime: Calendar = Calendar.getInstance(),

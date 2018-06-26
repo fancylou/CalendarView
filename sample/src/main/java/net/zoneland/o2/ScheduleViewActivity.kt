@@ -10,7 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_schedule_view.*
-import net.zoneland.o2.view.ScheduleViewEvent
+import net.zoneland.o2.view.CalendarViewEvent
 import net.zoneland.o2.view.listener.OnEventClickListener
 import net.zoneland.o2.view.listener.OnEventLongPressListener
 import net.zoneland.o2.view.listener.OnSchedulerPageChangedListener
@@ -85,14 +85,14 @@ class ScheduleViewActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun obtainEvents(): ArrayList<ScheduleViewEvent> {
+    private fun obtainEvents(): ArrayList<CalendarViewEvent> {
         val startTime1 = Calendar.getInstance()
         startTime1.set(Calendar.HOUR_OF_DAY, 13)
         startTime1.set(Calendar.MINUTE, 0)
         val endTime1 = startTime1.clone() as Calendar
         endTime1.set(Calendar.HOUR_OF_DAY, 15)
         endTime1.set(Calendar.MINUTE, 0)
-        val event1 = ScheduleViewEvent("1", startTime1, endTime1, "第一个事件", Color.BLUE)
+        val event1 = CalendarViewEvent("1", startTime1, endTime1, "第一个事件", Color.BLUE)
 
         val startTime2 = Calendar.getInstance()
         startTime2.set(Calendar.HOUR_OF_DAY, 14)
@@ -100,7 +100,7 @@ class ScheduleViewActivity : AppCompatActivity() {
         val endTime2 = startTime2.clone() as Calendar
         endTime2.set(Calendar.HOUR_OF_DAY, 15)
         endTime2.set(Calendar.MINUTE, 0)
-        val event2 = ScheduleViewEvent("2", startTime2, endTime2, "第2个事件", Color.RED)
+        val event2 = CalendarViewEvent("2", startTime2, endTime2, "第2个事件", Color.RED)
 
         val startTime3 = Calendar.getInstance()
         startTime3.set(Calendar.HOUR_OF_DAY, 14)
@@ -108,7 +108,7 @@ class ScheduleViewActivity : AppCompatActivity() {
         val endTime3 = startTime3.clone() as Calendar
         endTime3.set(Calendar.HOUR_OF_DAY, 18)
         endTime3.set(Calendar.MINUTE, 0)
-        val event3 = ScheduleViewEvent("3", startTime3, endTime3, "第3个事件", Color.GREEN)
+        val event3 = CalendarViewEvent("3", startTime3, endTime3, "第3个事件", Color.GREEN)
 
         val startTime4 = Calendar.getInstance()
         startTime4.set(Calendar.HOUR_OF_DAY, 16)
@@ -116,7 +116,7 @@ class ScheduleViewActivity : AppCompatActivity() {
         val endTime4 = startTime4.clone() as Calendar
         endTime4.set(Calendar.HOUR_OF_DAY, 17)
         endTime4.set(Calendar.MINUTE, 0)
-        val event4 = ScheduleViewEvent("4", startTime4, endTime4, "第4个事件", Color.YELLOW)
+        val event4 = CalendarViewEvent("4", startTime4, endTime4, "第4个事件", Color.YELLOW)
 
 
         val startTime = Calendar.getInstance()
@@ -125,7 +125,7 @@ class ScheduleViewActivity : AppCompatActivity() {
         val endTime = startTime.clone() as Calendar
         endTime.set(Calendar.HOUR_OF_DAY, 15)
         endTime.set(Calendar.MINUTE, 0)
-        val event = ScheduleViewEvent("5", startTime, endTime, "全天事件", Color.GRAY, true)
+        val event = CalendarViewEvent("5", startTime, endTime, "全天事件", Color.GRAY, true)
 
         val startTime21 = Calendar.getInstance()
         startTime21.set(Calendar.HOUR_OF_DAY, 13)
@@ -134,7 +134,7 @@ class ScheduleViewActivity : AppCompatActivity() {
         endTime21.set(Calendar.HOUR_OF_DAY, 15)
         endTime21.set(Calendar.MINUTE, 0)
         endTime21.add(Calendar.DAY_OF_YEAR, 2)
-        val event21 = ScheduleViewEvent("21", startTime21, endTime21, "21全天事件", Color.MAGENTA, true)
+        val event21 = CalendarViewEvent("21", startTime21, endTime21, "21全天事件", Color.MAGENTA, true)
 
         val startTime22 = Calendar.getInstance()
         startTime22.add(Calendar.DAY_OF_YEAR, 2)
@@ -143,7 +143,7 @@ class ScheduleViewActivity : AppCompatActivity() {
         val endTime22 = startTime22.clone() as Calendar
         endTime22.set(Calendar.HOUR_OF_DAY, 15)
         endTime22.set(Calendar.MINUTE, 0)
-        val event22 = ScheduleViewEvent("22", startTime22, endTime22, "22全天事件", Color.MAGENTA, true)
+        val event22 = CalendarViewEvent("22", startTime22, endTime22, "22全天事件", Color.MAGENTA, true)
 
         return arrayListOf(event1, event2, event3, event4, event, event21, event22)
     }

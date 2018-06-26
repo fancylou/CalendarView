@@ -390,7 +390,7 @@ class ScheduleView : View {
     /**
      * 添加日程事件
      */
-    fun setEvents(result: List<ScheduleViewEvent>) {
+    fun setEvents(result: List<CalendarViewEvent>) {
         refreshEventsAndCalEventWidth(result)
         notifyDataChanged()
     }
@@ -630,7 +630,7 @@ class ScheduleView : View {
      * 事件的标题
      * todo 如果背景色偏淡 字体颜色设为黑色 否则白色
      */
-    private fun drawEventTitle(event: ScheduleViewEvent, rect: RectF, canvas: Canvas?, originalTop: Float, originalLeft: Float) {
+    private fun drawEventTitle(event: CalendarViewEvent, rect: RectF, canvas: Canvas?, originalTop: Float, originalLeft: Float) {
         val mEventPadding = 8
         if (rect.right - rect.left - (mEventPadding * 2).toFloat() < 0) return
         if (rect.bottom - rect.top - (mEventPadding * 2).toFloat() < 0) return
@@ -719,10 +719,10 @@ class ScheduleView : View {
         }
     }
 
-    private fun refreshEventsAndCalEventWidth(result: List<ScheduleViewEvent>) {
+    private fun refreshEventsAndCalEventWidth(result: List<CalendarViewEvent>) {
         eventList.clear()
         result.sortedBy { it.startTime.timeInMillis }
-        val groups = HashMap<String, ArrayList<ScheduleViewEvent>>()
+        val groups = HashMap<String, ArrayList<CalendarViewEvent>>()
         val allDayKey = "allDayKey"
         result.forEach {
             if (it.isAllDay) {
@@ -746,9 +746,9 @@ class ScheduleView : View {
 
     }
 
-    private fun calEventWidthEveryday(list: ArrayList<ScheduleViewEvent>) {
+    private fun calEventWidthEveryday(list: ArrayList<CalendarViewEvent>) {
         //开始计算事件方块的重叠情况，计算一个最终的方块宽度
-        val columns = ArrayList<ArrayList<ScheduleViewEvent>>()
+        val columns = ArrayList<ArrayList<CalendarViewEvent>>()
         columns.add(ArrayList())
         for (eventRect in list) {
             var isPlaced = false
@@ -763,7 +763,7 @@ class ScheduleView : View {
                 }
             }
             if (!isPlaced) {
-                val newColumn = ArrayList<ScheduleViewEvent>()
+                val newColumn = ArrayList<CalendarViewEvent>()
                 newColumn.add(eventRect)
                 columns.add(newColumn)
             }
@@ -809,7 +809,7 @@ class ScheduleView : View {
         invalidate()
     }
 
-    private fun isEventsCollide(event: ScheduleViewEvent, event1: ScheduleViewEvent): Boolean {
+    private fun isEventsCollide(event: CalendarViewEvent, event1: CalendarViewEvent): Boolean {
         val start = event.startTime.timeInMillis
         val end = event.endTime.timeInMillis
         val start1 = event1.startTime.timeInMillis

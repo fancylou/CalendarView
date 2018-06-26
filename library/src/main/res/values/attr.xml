@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ScheduleViewLayout">
+    <declare-styleable name="CalendarView">
         <attr name="viewType" format="enum">
             <enum name="Week" value="0" />
             <enum name="Day" value="1" />
