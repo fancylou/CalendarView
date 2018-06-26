@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ScheduleViewLayout">
+        <attr name="viewType" format="enum">
+            <enum name="Week" value="0" />
+            <enum name="Day" value="1" />
+        </attr>
+        <attr name="firstDayOfWeek" format="enum">
+            <enum name="sunday" value="1"/>
+            <enum name="monday" value="2"/>
+            <enum name="tuesday" value="3"/>
+            <enum name="wednesday" value="4"/>
+            <enum name="thursday" value="5"/>
+            <enum name="friday" value="6"/>
+            <enum name="saturday" value="7"/>
+        </attr>
+        <attr name="headerTextSize" format="dimension" />
+        <attr name="headerTextColor" format="color" />
+        <attr name="headerTodayTextColor" format="color"/>
+        <attr name="timeTextSize" format="dimension"/>
+        <attr name="timeTextColor" format="color"/>
+        <attr name="hourHeight" format="dimension" />
+        <attr name="eventTextSize" format="dimension" />
+    </declare-styleable>
+</resources>
