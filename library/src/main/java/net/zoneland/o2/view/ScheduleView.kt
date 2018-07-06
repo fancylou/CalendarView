@@ -10,6 +10,7 @@ import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.view.*
 import android.widget.OverScroller
+import net.zoneland.o2.view.ext.Ext
 import net.zoneland.o2.view.listener.OnEventClickListener
 import net.zoneland.o2.view.listener.OnEventLongPressListener
 import org.jetbrains.anko.dip
@@ -208,7 +209,7 @@ class ScheduleView : View {
                 if (e != null && eventClickListener != null) {
                     eventList.forEach { event ->
                         if (event.rectF != null && e.x > event.rectF!!.left && e.x < event.rectF!!.right && e.y > event.rectF!!.top && e.y < event.rectF!!.bottom) {
-                            eventClickListener?.eventClick(event.event.id)
+                            eventClickListener?.eventClick(event.event)
                             playSoundEffect(SoundEffectConstants.CLICK)
                             return super.onSingleTapConfirmed(e)
                         }
@@ -222,7 +223,7 @@ class ScheduleView : View {
                 if (e != null && eventLongPressListener != null) {
                     eventList.forEach { event ->
                         if (event.rectF != null && e.x > event.rectF!!.left && e.x < event.rectF!!.right && e.y > event.rectF!!.top && e.y < event.rectF!!.bottom) {
-                            eventLongPressListener?.eventLongPress(event.event.id)
+                            eventLongPressListener?.eventLongPress(event.event)
                             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                             return
                         }
@@ -549,6 +550,12 @@ class ScheduleView : View {
 
         canvas?.clipRect(0f, 0f, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE)
         canvas?.drawRect(0f, 0f, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint)
+
+        // Draw all day label
+        if (mHeaderHeight > mHeaderTextHeight) { //have all day event
+            canvas?.drawText("全天", mTimeTextWidth + mHeaderRowPadding*2, mHeaderHeight, mTimeTextPaint)
+        }
+
         // Clip to paint header row only.
         canvas?.clipRect(mHeaderColumnWidth, 0f, width.toFloat(), mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE)
         canvas?.drawRect(0f, 0f, width.toFloat(), mHeaderHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint)
@@ -588,9 +595,11 @@ class ScheduleView : View {
                 }
                 val rectF = RectF(startPixel, top, right, bottom)
                 eventDrawBO.rectF = rectF
-                mEventBackgroundPaint.color = if (eventDrawBO.event.color == 0) mDefaultEventColor else eventDrawBO.event.color
+                val eventColor = if (eventDrawBO.event.color == 0) mDefaultEventColor else eventDrawBO.event.color
+                mEventBackgroundPaint.color = eventColor
                 canvas?.drawRoundRect(rectF, 0f, 0f, mEventBackgroundPaint)
-                drawEventTitle(eventDrawBO.event, rectF, canvas, top, startPixel)
+                val isDark = Ext.isDarkColor(eventColor)
+                drawEventTitle(eventDrawBO.event, rectF, canvas, top, startPixel, isDark)
             }
         }
     }
@@ -618,9 +627,11 @@ class ScheduleView : View {
                         bottom > mHeaderHeight + (mHeaderRowPadding * 2).toFloat() + mTimeTextHeight / 2 + mHeaderMarginBottom) {
                     val rectF = RectF(left, top, right, bottom)
                     eventDrawBO.rectF = rectF
-                    mEventBackgroundPaint.color = if (eventDrawBO.event.color == 0) mDefaultEventColor else eventDrawBO.event.color
+                    val eventColor = if (eventDrawBO.event.color == 0) mDefaultEventColor else eventDrawBO.event.color
+                    mEventBackgroundPaint.color = eventColor
                     canvas?.drawRoundRect(rectF, 0f, 0f, mEventBackgroundPaint)
-                    drawEventTitle(eventDrawBO.event, rectF, canvas, top, left)
+                    val isDarkColor = Ext.isDarkColor(eventColor)
+                    drawEventTitle(eventDrawBO.event, rectF, canvas, top, left, isDarkColor)
                 }
             }
         }
@@ -630,7 +641,7 @@ class ScheduleView : View {
      * 事件的标题
      * todo 如果背景色偏淡 字体颜色设为黑色 否则白色
      */
-    private fun drawEventTitle(event: CalendarViewEvent, rect: RectF, canvas: Canvas?, originalTop: Float, originalLeft: Float) {
+    private fun drawEventTitle(event: CalendarViewEvent, rect: RectF, canvas: Canvas?, originalTop: Float, originalLeft: Float, isEventColorDark: Boolean) {
         val mEventPadding = 8
         if (rect.right - rect.left - (mEventPadding * 2).toFloat() < 0) return
         if (rect.bottom - rect.top - (mEventPadding * 2).toFloat() < 0) return
@@ -641,6 +652,8 @@ class ScheduleView : View {
         bob.setSpan(StyleSpan(Typeface.BOLD), 0, bob.length, 0)
         bob.append(' ')
 
+        val textColor = if (isEventColorDark) mEventTextColor else Color.BLACK
+        mEventTextPaint.color = textColor
 
         val availableHeight = (rect.bottom - originalTop - (mEventPadding * 2).toFloat()).toInt()
         val availableWidth = (rect.right - originalLeft - (mEventPadding * 2).toFloat()).toInt()

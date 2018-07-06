@@ -8,10 +8,10 @@ import java.util.*
  */
 
 data class CalendarViewEvent(
-        var id:String = "",
         var startTime:Calendar = Calendar.getInstance(),
         var endTime: Calendar = Calendar.getInstance(),
         var name: String = "",
         var color: Int = ScheduleView.DEFAULT_EVENT_COLOR ,
-        var isAllDay: Boolean = false
+        var isAllDay: Boolean = false,
+        var mData: Any? = null
 )

@@ -186,13 +186,13 @@ class CalendarView : LinearLayout {
             view.initDrawThing()//一定要执行
             view.tag = mPosition
             view.setOnEventClickListener(object : OnEventClickListener {
-                override fun eventClick(eventId: String) {
-                    eventClickListener?.eventClick(eventId)
+                override fun eventClick(event: CalendarViewEvent) {
+                    eventClickListener?.eventClick(event)
                 }
             })
             view.setOnEventLongPressListener(object : OnEventLongPressListener {
-                override fun eventLongPress(eventId: String) {
-                    eventLongPressListener?.eventLongPress(eventId)
+                override fun eventLongPress(event: CalendarViewEvent) {
+                    eventLongPressListener?.eventLongPress(event)
                 }
             })
             mShowDays.put(position, view.setScheduleViewPagerPosition(mPosition))
