@@ -753,7 +753,7 @@ class ScheduleView : View {
                 }
             }
         }
-        groups.forEach { _, value ->
+        groups.forEach { (_, value) ->
             calEventWidthEveryday(value)
         }
 
