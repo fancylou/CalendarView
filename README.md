@@ -2,7 +2,7 @@
 
 
 
-[![CalendarView](https://jitpack.io/v/fancylou/CalendarView.svg)] (https://jitpack.io/#fancylou/CalendarView/v1.2.0)
+[![CalendarView](https://jitpack.io/v/fancylou/CalendarView.svg)](https://jitpack.io/#fancylou/CalendarView/v1.2.0)
 
 
 
