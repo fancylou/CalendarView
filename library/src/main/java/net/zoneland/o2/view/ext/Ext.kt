@@ -1,6 +1,7 @@
 package net.zoneland.o2.view.ext
 
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
+
 
 /**
  * Created by fancyLou on 06/07/2018.

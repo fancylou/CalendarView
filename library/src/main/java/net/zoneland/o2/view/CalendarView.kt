@@ -2,8 +2,7 @@ package net.zoneland.o2.view
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
+
 import android.util.AttributeSet
 import android.util.Log
 import android.util.SparseArray
@@ -11,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import net.zoneland.o2.view.listener.OnEventClickListener
 import net.zoneland.o2.view.listener.OnEventLongPressListener
 import net.zoneland.o2.view.listener.OnSchedulerPageChangedListener

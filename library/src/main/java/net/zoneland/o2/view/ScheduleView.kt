@@ -2,14 +2,14 @@ package net.zoneland.o2.view
 
 import android.content.Context
 import android.graphics.*
-import android.support.v4.view.GestureDetectorCompat
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.animation.FastOutLinearInInterpolator
+import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.ViewCompat
 import android.text.*
 import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.view.*
 import android.widget.OverScroller
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import net.zoneland.o2.view.ext.Ext
 import net.zoneland.o2.view.listener.OnEventClickListener
 import net.zoneland.o2.view.listener.OnEventLongPressListener
@@ -489,11 +489,17 @@ class ScheduleView : View {
             mCurrentOrigin.y = 0f
         }
 
+//        canvas?.clipRect(mHeaderColumnWidth,
+//                mHeaderHeight + (mHeaderRowPadding * 2).toFloat() + mHeaderMarginBottom + mTimeTextHeight / 2,
+//                width.toFloat(),
+//                height.toFloat(),
+//                Region.Op.REPLACE)
+        canvas?.save()
         canvas?.clipRect(mHeaderColumnWidth,
                 mHeaderHeight + (mHeaderRowPadding * 2).toFloat() + mHeaderMarginBottom + mTimeTextHeight / 2,
                 width.toFloat(),
-                height.toFloat(),
-                Region.Op.REPLACE)
+                height.toFloat())
+
 
         var startPixel = mHeaderColumnWidth
         var lineCount = ((height.toFloat() - mHeaderHeight - (mHeaderRowPadding * 2).toFloat() -
@@ -547,9 +553,14 @@ class ScheduleView : View {
 
             startPixel += mWidthPerDay + mColumnGap
         }
+        canvas?.restore()
 
-        canvas?.clipRect(0f, 0f, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE)
+
+//        canvas?.clipRect(0f, 0f, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE)
+        canvas?.save()
+        canvas?.clipRect(0f, 0f, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2)
         canvas?.drawRect(0f, 0f, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint)
+        canvas?.restore()
 
         // Draw all day label
         if (mHeaderHeight > mHeaderTextHeight) { //have all day event
@@ -557,8 +568,10 @@ class ScheduleView : View {
         }
 
         // Clip to paint header row only.
-        canvas?.clipRect(mHeaderColumnWidth, 0f, width.toFloat(), mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE)
+        canvas?.save()
+        canvas?.clipRect(mHeaderColumnWidth, 0f, width.toFloat(), mHeaderHeight + mHeaderRowPadding * 2)
         canvas?.drawRect(0f, 0f, width.toFloat(), mHeaderHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint)
+        canvas?.restore()
 
         startPixel = mHeaderColumnWidth
         mShowDayList.forEach { date ->
@@ -694,7 +707,8 @@ class ScheduleView : View {
         // Draw the background color for the header column.
         canvas?.drawRect(0f, mHeaderHeight + mHeaderRowPadding * 2, mHeaderColumnWidth, height.toFloat(), mHeaderColumnBackgroundPaint)
         // Clip to paint in left column only.
-        canvas?.clipRect(0f, mHeaderHeight + mHeaderRowPadding * 2, mHeaderColumnWidth, height.toFloat(), Region.Op.REPLACE)
+        canvas?.save()
+        canvas?.clipRect(0f, mHeaderHeight + mHeaderRowPadding * 2, mHeaderColumnWidth, height.toFloat())
         for (i in 0..23) {
             val top = mHeaderHeight + (mHeaderRowPadding * 2).toFloat() + mCurrentOrigin.y + (mHourHeight * i).toFloat() + mHeaderMarginBottom
 
@@ -702,6 +716,7 @@ class ScheduleView : View {
             val time = if (i < 10) "0$i:00" else "$i:00"
             if (top < height) canvas?.drawText(time, mTimeTextWidth + mHeaderColumnPadding * 2, top + mTimeTextHeight, mTimeTextPaint)
         }
+        canvas?.restore()
     }
 
 

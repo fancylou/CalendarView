@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_schedule_view.*
 import net.zoneland.o2.view.CalendarViewEvent
 import net.zoneland.o2.view.listener.OnEventClickListener
@@ -60,8 +60,8 @@ class ScheduleViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule_view)
-        val isWeek = intent.extras.getBoolean("week", false)
-        if (isWeek) {
+        val isWeek = intent?.extras?.getBoolean("week", false)
+        if (isWeek == true) {
             schedule_week.visibility = View.VISIBLE
             schedule_day.visibility = View.GONE
         } else {
